@@ -1,0 +1,31 @@
+/client
+├── /public
+└── /src
+    ├── /components       # Componenti atomici (Button, Input, Avatar, Modal)
+    ├── /context          # AuthContext e SocketContext per lo stato globale
+    ├── /hooks            # Custom hooks (es. useSocket, useAuth)
+    ├── /services         # Chiamate API (Axios/Fetch) verso il backend
+    └── /pages
+        ├── LandingPage.jsx
+        ├── ProfileSettings.jsx
+        ├── /auth
+        │   ├── LoginPage.jsx
+        │   ├── SignUpPage.jsx
+        │   ├── ForgotPage.jsx
+        │   └── TwoFactorPage.jsx
+        └── /chat
+            ├── ChatLayout.jsx       # Contenitore principale che racchiude la dashboard
+            ├── ChatList.jsx         # Lista delle conversazioni attive
+            ├── ChatConversation.jsx # La finestra della chat corrente con i messaggi
+            └── SearchPeople.jsx     # Barra o pagina di ricerca per trovare utenti
+
+            
+/server
+├── /config             # Connessione al Database SQL (Sequelize, Knex o PG-Pool)
+├── /controllers        # Logica di business (authController, messageController)
+├── /middlewares        # Protezione rotte (authMiddleware per verificare il JWT)
+├── /models             # Definizione delle tabelle SQL
+├── /routes             # Endpoint API (authRoutes, userRoutes, messageRoutes)
+├── /socket             # Gestione degli eventi di Socket.io
+├── server.js           # Punto di ingresso dell'applicazione
+└── .env                # Variabili d'ambiente (DB_HOST, JWT_SECRET, ecc.)
