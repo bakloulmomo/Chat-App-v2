@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('./db');
+const db = require('./config/db.js');
 const authRoutes = require('./routes/authRoutes.js');
 
 const app = express();
@@ -18,3 +18,4 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
     console.log("Server running");
 });
+
