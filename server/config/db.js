@@ -9,7 +9,7 @@ export const pool = mysql.createPool({
   port: Number(process.env.DB_PORT) || 3306,
   
 
-  waitForConnections: true,  // Mette in coda le query se tutte le connessioni sono occupate
+  waitForConnections: true,  //mette in coda le query se tutte le connessioni sono occupate
   connectionLimit: 10,       // max connessioni aperte contemporaneamente
   queueLimit: 0              // = coda illimitata per le richieste in attesa
 });

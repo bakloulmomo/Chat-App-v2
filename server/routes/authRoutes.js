@@ -1,14 +1,19 @@
-const express = require('express');
+import express from 'express';
+import { registerUser, loginUser, logoutUser, checkAuth } from '../controllers/authController.js';
+import { authenticateToken } from '../middlewares/authMiddleware.js'; // middleware per verificare il jwt
+
 const router = express.Router();
-const registerUser = require('../controllers/authController');
 
+// 1 REGISTRAZIONE
+router.post('/signup', registerUser);
 
-router.post('/signup', (req,res)=>{
-    console.log("SIGNUP ARRIVATO");
-    res.json({
-        ok:true
-    });
-});
+// 2 ACCESSO
+router.post('/login', loginUser);
 
+// 3 VERIFICA SESSIONE / PROFILO
+router.get('/me', authenticateToken, checkAuth);
 
-module.exports = router;
+// 4 LOGOUT
+router.post('/logout', logoutUser);
+
+export default router;
