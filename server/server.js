@@ -2,8 +2,10 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-// importa le rotte con la sintassi ES Modules
 import authRoutes from './routes/authRoutes.js'; 
+import userRoutes from './routes/userRoutes.js';
+import conversationRoutes from './routes/conversationRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
 
 dotenv.config(); // carica le variabili dal file .env
 
@@ -11,6 +13,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser()); // middleware per leggere i cookie nelle req protette
+
 
 // per fase di test, per non bloccare le richieste tra front e backend su porte diverse
 app.use(cors({
@@ -20,6 +23,10 @@ app.use(cors({
 
 // registrazione delle rotte
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/conversations', conversationRoutes);
+app.use('/api/messages', messageRoutes);
+
 
 app.get('/', (req, res) => {
     res.json({
@@ -47,6 +54,7 @@ app.use((err, req, res, next) => {
     message: "Internal server error"
   });
 });
+
 
 
 

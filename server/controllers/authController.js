@@ -2,6 +2,7 @@ import { pool } from '../config/db.js'; // Connection Pool mySQL
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'; // jwt
 import { registerSchema, loginSchema } from '../schemas/auth.schema.js';
+import dotenv from 'dotenv';
 
 // registrazione utente
 export const registerUser = async (req, res, next) => {
@@ -43,7 +44,7 @@ export const registerUser = async (req, res, next) => {
     });
 
   } catch (error) {
-    // passa l'errore al middleware globale (gestirà anche gli errori di Zod)
+    console.error("Errore durante la registrazione:", error); // ///// -------
     next(error);
   }
 };

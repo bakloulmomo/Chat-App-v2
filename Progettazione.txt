@@ -121,7 +121,3 @@ CREATE TABLE Messages (
         REFERENCES Users(id)
         ON DELETE CASCADE
 );
-
-ALTER USER 'bakloul'@'localhost' IDENTIFIED WITH mysql_native_password BY 'y79omlnjustl0lpop@@@';
-FLUSH PRIVILEGES;
-EXIT;

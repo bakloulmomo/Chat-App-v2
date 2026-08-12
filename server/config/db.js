@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise';
+import 'dotenv/config';
 
 // 1 Creazione Connection Pool 
 export const pool = mysql.createPool({

@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 export const authenticateToken = (req, res, next) => {
     // 1 recupera il token dal cookie (impostato in loginUser)
