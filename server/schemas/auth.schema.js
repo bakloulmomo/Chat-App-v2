@@ -19,7 +19,7 @@ export const registerSchema = z.object({
     .min(8, "La password deve contenere almeno 8 caratteri")
     // per forzare password:
     // .regex(/[A-Z]/, "Deve contenere una lettera maiuscola")
-    // .regex(/[0-9]/, "Deve contenere un numero")
+    .regex(/[0-9]/, "Deve contenere un numero")
 });
 
 // schema per il login

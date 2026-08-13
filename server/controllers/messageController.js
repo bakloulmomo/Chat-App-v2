@@ -1,4 +1,5 @@
 import { pool } from '../config/db.js';
+import { getIO } from '../socket.js';
 
 // 1 invia un nuovo messaggio in una conversazione
 export const sendMessage = async (req, res, next) => {
@@ -29,16 +30,28 @@ export const sendMessage = async (req, res, next) => {
             [conversationId, currentUserId, message_text]
         );
 
+        // preparazione dell'oggetto messaggio da restituire e da inviare via socket
+        const newMessage = {
+            id: result.insertId,
+            conversation_id: Number(conversationId),
+            sender_id: currentUserId,
+            message_text: message_text,
+            status: 'sent',
+            created_at: new Date()
+        };
+
+        // invio in tempo reale opcn socket.io
+        try {
+            const io = getIO();
+            // mando il nuovo messaggio a tutti gli utenti collegati alla stanza di questa conversazione
+            io.to(`conversation_${conversationId}`).emit('new_message', newMessage);
+        } catch (socketErr) {
+            console.error("Errore durante l'invio del messaggio via WebSocket:", socketErr.message);
+        }
+
         return res.status(201).json({
             success: true,
-            data: {
-                id: result.insertId,
-                conversation_id: conversationId,
-                sender_id: currentUserId,
-                message_text: message_text,
-                status: 'sent',
-                created_at: new Date()
-            }
+            data: newMessage
         });
     } catch (error) {
         console.error("Errore nell'invio del messaggio:", error);

@@ -1,15 +1,18 @@
 import express from 'express';
+import http from 'http'; // <-- per socket.io
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import { initSocket } from './socket.js'; // <-- per socket.io
 import authRoutes from './routes/authRoutes.js'; 
 import userRoutes from './routes/userRoutes.js';
 import conversationRoutes from './routes/conversationRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
 
-dotenv.config(); // carica le variabili dal file .env
+dotenv.config(); 
 
 const app = express();
+const server = http.createServer(app); // per socket.io, aggiunge Express nel server HTTP
 
 app.use(express.json());
 app.use(cookieParser()); // middleware per leggere i cookie nelle req protette
@@ -20,6 +23,8 @@ app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true // permette al frontend di inviare e ricevere il cookie JWT
 }));
+
+initSocket(server); // per socket.io, inizializza i WebSocket passando il server HTTP
 
 // registrazione delle rotte
 app.use('/api/auth', authRoutes);
@@ -58,6 +63,7 @@ app.use((err, req, res, next) => {
 
 
 
-app.listen(3000, () => {
+// usa server.listen piuttosto di app.listen per avviare sia HTTP che WebSocket
+server.listen(3000, () => {
     console.log("server running on port 3000");
 });
